@@ -26,4 +26,14 @@ class LibrosController {
     }
 }
 
+    async add(req, res){
+        try {
+            const libro= req.body;
+            const [result]= await pool.query(`INSERT INTO Libros(nombre, autor, categoria, añopublicacion, isbn) VALUES (?,?,?,?,?)`, [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
+            res.json ({"ID insertado": resul.insertId, "message": "Libro insertado exitosamente"});
+            } catch (error){
+                res.status(500).json({ "Error": "Ha ocurrido un error al agregar el libro"});
+            }
+    }
+
 export const libro = new LibrosController();
