@@ -2,10 +2,13 @@ import { pool } from './database.js';
 
 class LibrosController {
     async getAll(req, res) {
+        try {
         const [result] = await pool.query('SELECT * FROM libros');
         res.json(result);
+    } catch (error){
+        res.status(500).json({"Error": "Ha ocurrido un error al consultar los libros"});
     }
-    
+}
     async getOne(req, res){
         const id= req.body.id;
         const [result] = await pool.query('SELECT * FROM libros WHERE id = ?', [id]);
