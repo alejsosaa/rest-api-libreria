@@ -9,7 +9,6 @@ class LibrosController {
             res.status(500).json({ "Error": "Ha ocurrido un error al consultar los libros" });
         }
     }
-}
 
     async getOne(req, res) {
         try {
@@ -31,7 +30,7 @@ class LibrosController {
     async add(req, res) {
         try {
             const libro = req.body;
-            const [result] = await pool.query('INSERT INTO Libros(nombre, autor, categoria, añopublicacion, isbn) VALUES (?,?,?,?,?)', [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
+            const [result] = await pool.query('INSERT INTO libros(nombre, autor, categoria, añopublicacion, isbn) VALUES (?,?,?,?,?)', [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
             res.json({ "ID insertado": result.insertId, "message": "Libro insertado exitosamente" });
         } catch (error) {
             res.status(500).json({ "Error": "Ha ocurrido un error al agregar el libro" });
@@ -41,7 +40,7 @@ class LibrosController {
     async deleteisbn(req, res) {
         try {
             const libro = req.body;
-            const [result] = await pool.query('DELETE FROM Libros WHERE isbn = ?', [libro.isbn]);
+            const [result] = await pool.query('DELETE FROM libros WHERE isbn = ?', [libro.isbn]);
             if (result.affectedRows > 0) {
                 res.json({ "message": `Libro con isbn ${libro.isbn} eliminado exitosamente` });
             } else {
@@ -55,9 +54,9 @@ class LibrosController {
     async update(req, res) {
         try {
             const libro = req.body;
-            const [result] = await pool.query('UPDATE Libros SET nombre = ?, autor = ?, categoria = ?, añopublicacion = ? WHERE isbn = ?', [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
+            const [result] = await pool.query('UPDATE libros SET nombre = ?, autor = ?, categoria = ?, añopublicacion = ? WHERE isbn = ?', [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
             if (result.affectedRows > 0) {
-                res.json({ "message": `Libro con isbn ${libro.isbn} actualizado exitosamente` });
+                res.json({ "message": `libro con isbn ${libro.isbn} actualizado exitosamente` });
             } else {
                 res.status(404).json({ "Error": `No se encontró ningún libro con el isbn ${libro.isbn}` });
             }
