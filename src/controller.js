@@ -25,10 +25,8 @@ class LibrosController {
         } catch (error) {
             res.status(500).json({ "Error": "Ocurrió un error al consultar el libro" });
         }
-    } catch (error){
-        res.status(500).json({"Error": "Ocurrio un error al consultar el libro"});
     }
-}
+
 
     async add(req, res) {
         try {
